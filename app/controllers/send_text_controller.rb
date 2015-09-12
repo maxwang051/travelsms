@@ -1,3 +1,5 @@
+require 'forecast_io'
+
 class SendTextController < ApplicationController
 	def index
 	end
