@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.3'
 
 gem 'twilio-ruby'
+
+gem 'forecast_io'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
   gem 'sqlite3'
