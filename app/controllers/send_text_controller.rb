@@ -3,9 +3,10 @@ class SendTextController < ApplicationController
 	end
 
 	def process_sms
+		@body = params["Body"]
 
 		ForecastIO.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
-		@locations = Location.near(params["body"], 50, :order => :distance)
+		
 
 		render 'process_sms.xml.erb', :content_type => 'text/xml'
 	end
