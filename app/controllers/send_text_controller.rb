@@ -1,13 +1,15 @@
 require 'forecast_io'
 
 class SendTextController < ApplicationController
+	ForecastIO.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
+	
 	def index
 	end
 
 	def process_sms
 		@location = Geocoder.search(params["Body"])
 
-		ForecastIO.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
+		
 		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude, 
 			options = { lang=['en'] })
 
