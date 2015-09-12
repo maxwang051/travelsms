@@ -7,6 +7,8 @@ gem 'rails', '4.2.3'
 gem 'twilio-ruby'
 
 gem 'forecast_io'
+
+gem 'geocoder'
 # Use sqlite3 as the database for Active Record
 group :development, :test do
   gem 'sqlite3'
