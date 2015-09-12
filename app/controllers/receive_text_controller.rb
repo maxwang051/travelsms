@@ -4,4 +4,5 @@ class ReceiveTextController < ApplicationController
 		from_number = params["From"]
 
 		SMSLogger.log_text_message from_number, message_body
+	end
 end
