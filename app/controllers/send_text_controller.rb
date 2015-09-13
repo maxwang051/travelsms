@@ -25,7 +25,7 @@ class SendTextController < ApplicationController
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
 		else
-			render 'weather.xml.erb', :content_type => 'text/xml'
+			render 'other.xml.erb', :content_type => 'text/xml'
 		end
 
 	end
