@@ -7,6 +7,7 @@ class SendTextController < ApplicationController
 	end
 
 	def process_sms
+		@body = params["Body"]
 		@location = Geocoder.search(params["Body"])
 
 		ForecastIO.configure do |configuration|
