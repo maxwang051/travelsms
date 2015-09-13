@@ -1,7 +1,7 @@
 class SendTextController < ApplicationController
 	@@input_count = 0
 	@@location = Geocoder.search("Austin, TX")
-	@@plain_location = ''
+	@@plain_location ||= ''
 
 	def index
 	end
