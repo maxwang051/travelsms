@@ -13,7 +13,7 @@ class SendTextController < ApplicationController
 		else
 			@body = params["Body"] # otherwise set the command to equal the text message
 		end
-		input_count += 1
+		@input_count = 1
 		
 		ForecastIO.configure do |configuration| 
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
