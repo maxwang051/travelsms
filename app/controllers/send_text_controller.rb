@@ -6,8 +6,11 @@ class SendTextController < ApplicationController
 	def process_sms
 		from_number = params["From"]
 		@user = User.new
+		@location = ''
+		@latitude = 0
+		@longitude = 0
 
-		if !(User.where(phone_number: 'from_number').nil?) && !(User.where(phone_number: 'from_number').location.nil?)
+		if !(User.where(phone_number: 'from_number').nil?)
 			@user = User.find_by phone_number: from_number
 			@latitude = @user.latitude
 			@longitude = @user.longitude
