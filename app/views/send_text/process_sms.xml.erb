@@ -1,11 +1,9 @@
 <Response>
   <Sms>
-  	<% while @body.downcase != "stop" do %>
-	  	<% if @body.downcase == "weather" %>
+	  	<% if @body.downcase.include? "weather" %>
 	  		<%= @forecast.currently.summary %>. It is currently <%= @forecast.currently.temperature %> degrees. The chance of precipitation is <%= (@forecast.currently.precipProbability * 100).round(2) %>% and humidity is at <%= (@forecast.currently.humidity * 100).round(2) %>%.
 	  	<% elsif %>
 	  		What would you like to know? [weather, hotels, activities]
 	  	<% end %>
-  	<% end %>
   </Sms>
 </Response>
