@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 
+gem 'google_directions'
+
 gem 'yelp', '~> 2.0.6'
 
 gem 'twilio-ruby'
