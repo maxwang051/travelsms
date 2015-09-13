@@ -1,18 +1,18 @@
 
 class SendTextController < ApplicationController
 	@input_count = 0
-	@location = Geocoder.search("Austin, TX")
+	#@location = Geocoder.search("Austin, TX")
 
 	def index
 	end
 
 	def process_sms
-		if @input_count == 0
+		#if @input_count == 0
 			@location = Geocoder.search(params["Body"])
-			@body = '' # set location to text message if there is not one yet
-		else
+			#@body = '' # set location to text message if there is not one yet
+		#else
 			@body = params["Body"] # otherwise set the command to equal the text message
-		end
+		#end
 		@input_count = 1
 		
 		ForecastIO.configure do |configuration| 
