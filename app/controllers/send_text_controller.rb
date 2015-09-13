@@ -10,7 +10,7 @@ class SendTextController < ApplicationController
 		@latitude = 0
 		@longitude = 0
 
-		if !(User.where(phone_number: 'from_number').nil?)
+		if !(User.where(phone_number: from_number).nil?)
 			@user = User.find_by phone_number: from_number
 			@latitude = @user.latitude
 			@longitude = @user.longitude
@@ -19,8 +19,9 @@ class SendTextController < ApplicationController
 			@location = params["Body"]
 			@latitude = Geocoder.search(params["Body"])[0].latitude
 			@longitude = Geocoder.search(params["Body"])[0].latitude
-			@user = User.create(phone_number: from_number, latitude: @latitude, 
+			@user = User.new(phone_number: from_number, latitude: @latitude, 
 				longitude: @longitude)
+			@user.save
 		end
 
 		
