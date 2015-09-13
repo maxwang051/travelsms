@@ -27,7 +27,7 @@ class SendTextController < ApplicationController
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
 			})
-		@response = client.search(@@plain_location)
+		@response = client.search(@@plain_location, {term:'food'})
 
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # send text message to user
