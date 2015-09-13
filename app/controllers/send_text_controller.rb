@@ -23,7 +23,7 @@ class SendTextController < ApplicationController
 
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
-		elsif @body.downcase == 'quit'
+		elsif @body.downcase == 'done'
 			render 'stop.xml.erb', :content_type => 'text/xml'
 			@@input_count = 0
 		else
