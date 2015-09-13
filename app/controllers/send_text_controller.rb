@@ -1,4 +1,3 @@
-
 class SendTextController < ApplicationController
 	@@input_count = 0
 	@@location = Geocoder.search("Austin, TX")
@@ -23,7 +22,7 @@ class SendTextController < ApplicationController
 		@forecast = ForecastIO.forecast(@@location[0].latitude, @@location[0].longitude) # set weather forecast for the location
 
 		client = Yelp::Client.new({
-			consumer_key: 'MmDKe4b-eBzQ4d6Vm62NGXnzPqg',
+			consumer_key: 'pEUEGZHGXcTUlkpIzedWFQ',
 			consumer_secret: 'MmDKe4b-eBzQ4d6Vm62NGXnzPqg',
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
@@ -32,7 +31,7 @@ class SendTextController < ApplicationController
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
 		elsif @body.downcase == 'restaurants' || @body.downcase == 'restaurant'
-			@results = client.search('San Francisco', { term: 'restaurants' })
+			@results = client.search(@@plain_location, { term: 'restaurants' })
 			render 'restaurants.xml.erb', :content_type => 'text/xml'
 		elsif @body.downcase == 'done'
 			render 'stop.xml.erb', :content_type => 'text/xml'
