@@ -10,7 +10,7 @@ class SendTextController < ApplicationController
 		if @@input_count == 0
 			@@location = Geocoder.search(params["Body"])
 			@@plain_location = params["Body"]
-			redner 'other.xml.erb', :content_type => 'text/xml'
+			render 'other.xml.erb', :content_type => 'text/xml'
 		end
 		@body = params["Body"] #  set the command to equal the plain text message
 
