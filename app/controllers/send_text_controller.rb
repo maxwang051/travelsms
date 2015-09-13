@@ -22,7 +22,7 @@ class SendTextController < ApplicationController
 
 		@forecast = ForecastIO.forecast(@@location[0].latitude, @@location[0].longitude) # set weather forecast for the location
 
-		@client = Yelp::Client.new({
+		client = Yelp::Client.new({
 			consumer_key: 'MmDKe4b-eBzQ4d6Vm62NGXnzPqg',
 			consumer_secret: 'MmDKe4b-eBzQ4d6Vm62NGXnzPqg',
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
