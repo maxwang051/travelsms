@@ -2,7 +2,7 @@
 <Sms>
 <% for i in 1..10 %>
 city_query = @@plain_location.downcase.tr(" ", "+")
-query = @response.businesses[i].name.query(" ", "+")
+query = @response.businesses[i].name.downcase.tr(" ", "+")
 <%= @response.businesses[i].name %>: <%= @response.businesses[i].rating %>/5 stars based on <%= @response.businesses[i].review_count %> reviews
 Directions: <homepage xlink:type="simple" xlink:href="http://google.com/maps/place/"+ <% query %> +"+"+ <% city_query %>+"">Click Here</homepage>
 _________________
