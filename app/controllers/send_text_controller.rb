@@ -27,11 +27,11 @@ class SendTextController < ApplicationController
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
 			})
+		@response = client.search(@@plain_location)
 
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
 		elsif @body.downcase == 'restaurants' || @body.downcase == 'restaurant'
-			@results = client.search(@@plain_location, { term: 'restaurants' })
 			render 'restaurants.xml.erb', :content_type => 'text/xml'
 		elsif @body.downcase == 'done'
 			render 'stop.xml.erb', :content_type => 'text/xml'
