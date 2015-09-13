@@ -1,18 +1,25 @@
 
 class SendTextController < ApplicationController
-	
+	input_count = 0
+	@location = nil
 
 	def index
 	end
 
 	def process_sms
+		if input_count === 0
+			@location = params["Body"]
+		end
+		input_count += 1
 		@body = params["Body"]
+		
 		@location = Geocoder.search(params["Body"])
 
 		ForecastIO.configure do |configuration|
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
 		end
-
+		
+		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude)
 
 		render 'process_sms.xml.erb', :content_type => 'text/xml'
 	end
