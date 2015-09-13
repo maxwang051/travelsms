@@ -1,5 +1,5 @@
 <Response>
 	<Sms>
-		<%= @response.businesses %>
+		<%= @response.each { |x| x } %>
 	</Sms>
 </Response>
