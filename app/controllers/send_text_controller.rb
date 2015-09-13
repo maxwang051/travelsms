@@ -10,6 +10,7 @@ class SendTextController < ApplicationController
 		if @@input_count == 0
 			@@location = Geocoder.search(params["Body"])
 			@@plain_location = params["Body"]
+			redner 'other.xml.erb', :content_type => 'text/xml'
 		end
 		@body = params["Body"] #  set the command to equal the plain text message
 
@@ -29,15 +30,15 @@ class SendTextController < ApplicationController
 			})
 		@response = client.search(@@plain_location, {term:'food'})
 
+		terms = ['weather', 'food', 'restaurant', 'restaurants']
+
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # send text message to user
 		elsif @body.downcase == 'restaurants' || @body.downcase == 'food'
 			render 'restaurants.xml.erb', :content_type => 'text/xml'
-		elsif @body.downcase == 'done'
+		elsif !(terms.include(@body.downcase)) 
 			render 'stop.xml.erb', :content_type => 'text/xml'
 			@@input_count = 0
-		elsif @body.downcase != 'stop' && @body.downcase != 'start'
-			render 'other.xml.erb', :content_type => 'text/xml'
 		end
 
 	end
