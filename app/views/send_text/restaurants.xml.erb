@@ -1,7 +1,7 @@
 <Response>
 <Sms>
 <% for i in 1..10 %>
-<% @city_query = @@plain_location.downcase.tr(" ", "+") %>
+
 <% @query = @response.businesses[i].name.downcase.tr(" ", "+") %>
 <%= @response.businesses[i].name %>: <%= @response.businesses[i].rating %>/5 stars based on <%= @response.businesses[i].review_count %> reviews
 Directions: 
