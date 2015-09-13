@@ -1,9 +1,6 @@
 <Response>
-  <p><Sms><%= @forecast.currently.summary %>. 
-  	It is currently <%= @forecast.currently.temperature %> degrees. 
-  	The chance of precipitation is <%= (@forecast.currently.precipProbability * 100).round(2) %>% and 
-  	humidity is at <%= (@forecast.currently.humidity * 100).round(2) %>%.
+  <Sms><%= @forecast.currently.summary %>. 
+  It is currently <%= @forecast.currently.temperature %> degrees. The chance of precipitation is <%= (@forecast.currently.precipProbability * 100).round(2) %>% and humidity is at <%= (@forecast.currently.humidity * 100).round(2) %>%.
 
   </Sms>
-</p>
 </Response>
