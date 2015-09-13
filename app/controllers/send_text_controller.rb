@@ -1,26 +1,33 @@
 
 class SendTextController < ApplicationController
+	@input_count = 0
+	@location = Geocoder.search("Austin, TX")
 
 	def index
 	end
 
 	def process_sms
-		input_count = 0
-		if input_count === 0
-			@location = params["Body"]
+		if @input_count === 0
+			@location = Geocoder.search(params["Body"])
+			@body = '' # set location to text message if there is not one yet
+		else
+			@body = params["Body"] # otherwise set the command to equal the text message
 		end
 		input_count += 1
-		@body = params["Body"]
 		
-		@location = Geocoder.search(params["Body"])
-
-		ForecastIO.configure do |configuration|
+		ForecastIO.configure do |configuration| 
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
 		end
 
-		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude)
+		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude) # set weather forecast for the location
 
-		render 'process_sms.xml.erb', :content_type => 'text/xml'
+
+		if @body.downcase == 'weather'
+			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
+		else
+			render 'other.xml.erb', :content_type => 'text/xml'
+		end
+
 	end
 
 	def send_text_message
