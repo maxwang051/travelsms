@@ -1,28 +1,30 @@
 class SendTextController < ApplicationController
-	@@input_count = 0
-	@@location = Geocoder.search("Austin, TX")
-	@@plain_location = ''
 
 	def index
 	end
 
 	def process_sms
-		@body = 'blank'
-		if @@input_count == 0
-			@@location = Geocoder.search(params["Body"])
-			@@plain_location = params["Body"]
-			render 'other.xml.erb', :content_type => 'text/xml'
+		from_number = params["From"]
+
+		if !(User.where(phone_number: 'from_number').nil?) && !(User.where(phone_number: 'from_number').location.nil?)
+			@user = User.find_by phone_number: from_number
+			@latitude = @user.latitude
+			@longitude = @user.longitude
+			@location = @user.location
 		else
-			@body = params["Body"] #  set the command to equal the plain text message
+			@location = params["Body"]
+			@latitude = Geocoder.search(params["Body"])[0].latitude
+			@longitude = Geocoder.search(params["Body"])[0].latitude
+			@user = User.create(phone_number: from_number, latitude: @latitude, 
+				longitude: @longitude)
 		end
 
-		@@input_count = 1
 		
 		ForecastIO.configure do |configuration| 
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
 		end
 
-		@forecast = ForecastIO.forecast(@@location[0].latitude, @@location[0].longitude) # set weather forecast for the location
+		@forecast = ForecastIO.forecast(@latitude, @longitude) # set weather forecast for the location
 
 		client = Yelp::Client.new({
 			consumer_key: 'pEUEGZHGXcTUlkpIzedWFQ',
@@ -30,20 +32,16 @@ class SendTextController < ApplicationController
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
 			})
-		@response = client.search(@@plain_location, {term:'food'})
+		@response = client.search(@location, {term:'food'})
 
-		terms = ['weather', 'food', 'restaurant', 'restaurants']
-
-		if @body.downcase == 'weather'
-			render 'weather.xml.erb', :content_type => 'text/xml' # send text message to user
-		elsif @body.downcase == 'restaurants' || @body.downcase == 'food'
-			render 'restaurants.xml.erb', :content_type => 'text/xml'
-		elsif !(terms.include?(@body.downcase)) && @body != 'blank' 
-			render 'stop.xml.erb', :content_type => 'text/xml'
-			@@input_count = 0
-		end
 
 	end
+
+
+
+
+
+
 
 	def send_text_message
     number_to_send_to = params[:number_to_send_to]
