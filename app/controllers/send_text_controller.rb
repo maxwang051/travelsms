@@ -7,7 +7,7 @@ class SendTextController < ApplicationController
 	end
 
 	def process_sms
-		@body = ''
+		@body = 'blank'
 		if @@input_count == 0
 			@@location = Geocoder.search(params["Body"])
 			@@plain_location = params["Body"]
