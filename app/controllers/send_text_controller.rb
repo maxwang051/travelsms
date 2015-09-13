@@ -30,8 +30,8 @@ class SendTextController < ApplicationController
 		@response = client.search(@@plain_location)
 
 		if @body.downcase == 'weather'
-			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
-		elsif @body.downcase == 'restaurants' || @body.downcase == 'restaurant'
+			render 'weather.xml.erb', :content_type => 'text/xml' # send text message to user
+		elsif @body.downcase == 'restaurants' || @body.downcase == 'food'
 			render 'restaurants.xml.erb', :content_type => 'text/xml'
 		elsif @body.downcase == 'done'
 			render 'stop.xml.erb', :content_type => 'text/xml'
