@@ -13,11 +13,8 @@ class SendTextController < ApplicationController
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
 		end
 
-		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude)
 
-		while !(@body.equal? 'stop') do
-			render 'process_sms.xml.erb', :content_type => 'text/xml'
-		end
+		render 'process_sms.xml.erb', :content_type => 'text/xml'
 	end
 
 	def send_text_message
