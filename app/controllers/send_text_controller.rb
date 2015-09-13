@@ -36,7 +36,7 @@ class SendTextController < ApplicationController
 		elsif @body.downcase == 'done'
 			render 'stop.xml.erb', :content_type => 'text/xml'
 			@@input_count = 0
-		else
+		elsif @body.downcase != 'stop' && @body.downcase != 'start'
 			render 'other.xml.erb', :content_type => 'text/xml'
 		end
 

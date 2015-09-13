@@ -1,7 +1,8 @@
 <Response>
 <Sms>
 <% for i in 1..10 %>
-<%= @response.businesses[i].name %>
+<%= @response.businesses[i].name %>: <%= @response.businesses[i].rating %> out of <%= @response.businesses[i].review_count %> reviews
+_________________
 
 <% end %>
 </Sms>
