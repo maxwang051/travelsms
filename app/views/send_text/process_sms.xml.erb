@@ -3,7 +3,7 @@
   	<% temp_location = @location %>
   	<% forecast = ForecastIO.forecast(temp_location[0].latitude, temp_location[0].longitude) %>
 	  	<% if @body.downcase.include? "weather" %>
-	  		<%= @forecast.currently.summary %>. It is currently <%= @forecast.currently.temperature.round(1) %> degrees. The chance of precipitation is <%= (@forecast.currently.precipProbability * 100).round(2) %>% and humidity is at <%= (@forecast.currently.humidity * 100).round(2) %>%.
+	  		<%= forecast.currently.summary %>. It is currently <%= forecast.currently.temperature.round(1) %> degrees. The chance of precipitation is <%= (forecast.currently.precipProbability * 100).round(2) %>% and humidity is at <%= (forecast.currently.humidity * 100).round(2) %>%.
 	  	<% elsif %>
 	  		What would you like to know? [weather, hotels, activities]
 	  	<% end %>
