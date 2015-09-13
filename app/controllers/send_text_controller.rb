@@ -15,7 +15,9 @@ class SendTextController < ApplicationController
 
 		@forecast = ForecastIO.forecast(@location[0].latitude, @location[0].longitude)
 
-		render 'process_sms.xml.erb', :content_type => 'text/xml'
+		while !(@body.equal? 'stop') do
+			render 'process_sms.xml.erb', :content_type => 'text/xml'
+		end
 	end
 
 	def send_text_message
