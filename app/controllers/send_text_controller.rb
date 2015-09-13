@@ -38,7 +38,7 @@ class SendTextController < ApplicationController
 			render 'weather.xml.erb', :content_type => 'text/xml' # send text message to user
 		elsif @body.downcase == 'restaurants' || @body.downcase == 'food'
 			render 'restaurants.xml.erb', :content_type => 'text/xml'
-		elsif !(terms.include(@body.downcase)) && @body  
+		elsif !(terms.include?(@body.downcase)) && @body  
 			render 'stop.xml.erb', :content_type => 'text/xml'
 			@@input_count = 0
 		end
