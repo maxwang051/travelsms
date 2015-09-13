@@ -9,10 +9,9 @@ class SendTextController < ApplicationController
 	def process_sms
 		if @@input_count == 0
 			@@location = Geocoder.search(params["Body"])
-			@body = '' # set location to text message if there is not one yet
-		else
-			@body = params["Body"] # otherwise set the command to equal the text message
 		end
+		@body = params["Body"] #  set the command to equal the plain text message
+
 		@@input_count = 1
 		
 		ForecastIO.configure do |configuration| 
@@ -24,6 +23,9 @@ class SendTextController < ApplicationController
 
 		if @body.downcase == 'weather'
 			render 'weather.xml.erb', :content_type => 'text/xml' # sent text message to user
+		elsif @body.downcase == 'stop'
+			render 'stop.xml.erb', :content_type => 'text/xml'
+			@@input_count = 0
 		else
 			render 'other.xml.erb', :content_type => 'text/xml'
 		end
