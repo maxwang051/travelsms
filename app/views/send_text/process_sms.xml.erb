@@ -1,3 +1,3 @@
 <Response>
-  <Sms>Current Weather: <%= @forecast.currently %></Sms>
+  <Sms>It is currently <%= @forecast.currently.temperature %> and a(n) <%= @forecast.currently.summary %> day. The chance of precipitation is <%= @forecast.currently.precipProbabilit * 100 %>%% and humidity is at <%= @forecast.currently.humidity * 100 %>%%.</Sms>
 </Response>
