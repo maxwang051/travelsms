@@ -5,6 +5,7 @@ class SendTextController < ApplicationController
 
 	def process_sms
 		from_number = params["From"]
+		@user = User.new
 
 		if !(User.where(phone_number: 'from_number').nil?) && !(User.where(phone_number: 'from_number').location.nil?)
 			@user = User.find_by phone_number: from_number
