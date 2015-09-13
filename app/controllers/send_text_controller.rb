@@ -33,7 +33,7 @@ class SendTextController < ApplicationController
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
 			})
-		@response = client.search(@location, {term:'food'})
+		@response = client.search('Austin', {term:'food'})
 
 
 	end
