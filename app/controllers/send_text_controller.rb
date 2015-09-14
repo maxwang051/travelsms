@@ -17,9 +17,10 @@ class SendTextController < ApplicationController
 			@location = @user.location
 		else
 			# User not found
+
 			@location = params["Body"]
 			@cords = Geocoder.search(params["Body"])[0]
-
+			@formatted_location = @cords.data["formatted_address"]
 			#binding.pry some magic stuff the twilio guy did to see how the data was coming in
 
 			@latitude = @cords.data['geometry']['location']['lat']
