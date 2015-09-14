@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  post 'send_text/send_text_message'
+
   get 'sms' => 'receive_text#index'
   get 'send_text/process_sms' => 'send_text/process_sms'
   root 'send_text#index'

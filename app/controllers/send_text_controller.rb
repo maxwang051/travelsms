@@ -5,31 +5,42 @@ class SendTextController < ApplicationController
 
 	def process_sms
 		from_number = params["From"]
-		@user = User.new
 		@location = ''
 		@latitude = 0
 		@longitude = 0
 
-		if !(User.where(phone_number: from_number).nil?)
+		if (User.find_by phone_number: from_number)
+			# If user found
 			@user = User.find_by phone_number: from_number
 			@latitude = @user.latitude
 			@longitude = @user.longitude
 			@location = @user.location
 		else
+			# User not found
 			@location = params["Body"]
-			@latitude = Geocoder.search(params["Body"])[0].latitude
-			@longitude = Geocoder.search(params["Body"])[0].latitude
-			@user = User.new(phone_number: from_number, latitude: @latitude, 
-				longitude: @longitude)
-			@user.save
-		end
+			@cords = Geocoder.search(params["Body"])[0]
 
+			#binding.pry some magic stuff the twilio guy did to see how the data was coming in
+
+			@latitude = @cords.data['geometry']['location']['lat']
+			@longitude = @cords.data['geometry']['location']['lng']	
+
+			puts @location
+			puts @cords
+			puts @latitude
+			puts @longitude
+
+			@user = User.create(phone_number: from_number, latitude: @latitude, 
+				longitude: @longitude, location: @location)
+
+			render 'city_set.xml.erb', :content_type => 'text/xml' # displays after user types in a city
+		end
 		
 		ForecastIO.configure do |configuration| 
 		  configuration.api_key = 'afe7d9eca604d31e23d47b7062511b0d'
 		end
 
-		@forecast = ForecastIO.forecast(@latitude, @longitude) # set weather forecast for the location
+		@forecast = ForecastIO.forecast(@latitude, @longitude) # set weather forecast using coordinates
 
 		client = Yelp::Client.new({
 			consumer_key: 'pEUEGZHGXcTUlkpIzedWFQ',
@@ -37,15 +48,22 @@ class SendTextController < ApplicationController
 			token: '_o_I1Le1TVVrFrrN-bj3jsAEupa6a0zy',
 			token_secret: 'cZe24B1E23oniH6QGWMUlGDKZvY'
 			})
-		@response = client.search('Austin', {term:'food'})
+		
 
+		if params["Body"].downcase.include?('weather')
+			render 'weather.xml.erb', :content_type => 'text/xml'
+		elsif params["Body"].downcase.include?('search')
+			@response = client.search(@location, {term:params["Body"][7..-1]})
+			render 'yelp_search.xml.erb', :content_type => 'text/xml' # display if the user searches for food
+		elsif params["Body"].downcase == 'done'
+			@user.delete # delete the user so the next time they use the app it will create a new location for them
+			render 'stop.xml.erb', :content_type => 'text/xml' 
+		elsif params["Body"] == @location
+		else 
+			render '404.xml.erb', :content_type => 'text/xml'
+		end
 
 	end
-
-
-
-
-
 
 
 	def send_text_message
